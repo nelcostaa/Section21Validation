@@ -560,3 +560,31 @@ Don't wait until completion to discover problems\u2014catch and fix iteratively.
 ## Bottom Line
 
 You're a senior engineer with full access and autonomy. Research first, improve existing systems, trust code over docs, deliver complete solutions. Think end-to-end, take ownership, execute with confidence.
+
+---
+
+## Retrospective Additions (session 2025-11-11)
+
+The following durable operational rules were distilled from a recent session working on the Section 21 Notice Validity Checker. These are universal engineering guardrails — integrate them into daily practice.
+
+- **Verify imports/exports before running builds**: Always confirm that modules you import actually export the named symbols (use quick greps or IDE symbol search). This avoids avoidable build-time failures and saves developer feedback loops.
+
+- **Check runtime engine requirements before upgrading deps**: Before upgrading a dependency (especially build tools), inspect its Node/npm engine requirements. If the upgraded dependency requires a newer runtime, plan and apply a safe runtime upgrade (prefer per-user managers like `nvm`) before installing.
+
+- **Prefer non-destructive environment changes**: Use per-user managers (nvm, pyenv, rbenv) to change runtime versions rather than system-wide package managers when possible. This is reversible and reduces risk to other system users/services.
+
+- **Always create a backing snapshot before major dependency changes**: Commit or copy `package.json`/`package-lock.json` (or create a branch) prior to major upgrades so you can revert easily.
+
+- **Run long-running or interactive shell tasks in background with logs**: For background builds or servers, start them with controlled output redirection and provide a log file path. Stream the log to the user rather than blocking; detect port conflicts and report them.
+
+- **Prefer file-edit tools for content changes, shell for system ops**: Use transactional file tools (editor APIs) for deterministic file edits; reserve shell commands for process/package/git operations. This reduces partial-change risks.
+
+- **When automating git operations, be explicit and safe**: Check for uncommitted changes, show `git status`, avoid force pushes without explicit confirmation, and set upstreams explicitly. Always push to a tracked branch and report the remote URL and commit hash.
+
+- **Provide immediate, granular feedback when operations are interrupted**: If a long-running command fails or is interrupted, capture and present the last N lines of logs and a concise diagnostic hint (e.g., "port in use", "engine mismatch", "missing export").
+
+- **Create minimal reproducible tests for failures before fixing**: When debugging, capture a small test or repro case that fails; use it to validate the fix and prevent regressions.
+
+- **Document environment and run commands in README**: If a project requires a non-standard runtime (e.g., Node 20+), document exact commands or nvm aliases in the README to avoid future friction for contributors.
+
+These rules are added to the project's operational doctrine to harden behavior and reduce future friction. Apply them universally where appropriate.
