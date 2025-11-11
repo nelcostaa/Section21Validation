@@ -7,18 +7,18 @@ export default function Hero({ onStart }) {
     <div className="container mx-auto px-6 py-16 md:py-24">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
         <div className="flex flex-col gap-6">
-          <h1 className="text-5xl md:text-6xl font-bold text-noble-dark-green leading-tight">
-            Financial Clarity You Can Trust
+          <h1 className="text-5xl md:text-6xl font-bold text-white leading-tight">
+            Section 21 Notice Validity Checker
           </h1>
-          <p className="text-lg text-noble-dark-green">
-            Trusted financial guidance for every stage of life and business since 1987
+          <p className="text-lg text-white">
+            Answer a few quick questions to assess whether a Section 21 notice is valid. Get clear guidance and next steps.
           </p>
           <div className="mt-4">
             <button
               onClick={onStart}
-              className="bg-noble-dark-green text-white px-6 py-3 rounded-full font-semibold hover:bg-opacity-90 transition-colors"
+              className="bg-white text-noble-dark-green px-6 py-3 rounded-full font-semibold hover:opacity-90 transition-colors"
             >
-              Connect with our experts
+              Start the assessment
             </button>
           </div>
         </div>

@@ -10,12 +10,12 @@ export default function Navbar() {
         </a>
       </div>
       <div className="flex items-center gap-6">
-        <a href="#" className="text-sm text-noble-dark-green hover:underline">
+        <a href="#" className="text-sm text-white hover:underline">
           Services
         </a>
         <a
           href="#"
-          className="bg-noble-dark-green text-white px-4 py-2 rounded-full font-semibold hover:opacity-90 transition"
+          className="bg-white text-noble-dark-green px-4 py-2 rounded-full font-semibold hover:opacity-90 transition"
         >
           Book an appointment
         </a>

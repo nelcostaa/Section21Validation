@@ -23,7 +23,7 @@ function App() {
   }
 
   return (
-    <div className="min-h-screen bg-noble-light-green">
+    <div className="min-h-screen bg-noble-dark-green">
       <Navbar />
       {appState === 'start' && <Hero onStart={handleStart} />}
       {appState === 'questionnaire' && (
