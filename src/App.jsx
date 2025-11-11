@@ -1,7 +1,8 @@
 import { useState } from 'react'
-import StartPage from './components/StartPage'
 import QuestionWizard from './components/QuestionWizard'
 import ResultPage from './components/ResultPage'
+import Navbar from './components/Navbar'
+import Hero from './components/Hero'
 
 function App() {
   const [appState, setAppState] = useState('start') // 'start', 'questionnaire', 'result'
@@ -22,8 +23,9 @@ function App() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      {appState === 'start' && <StartPage onStart={handleStart} />}
+    <div className="min-h-screen bg-noble-light-green">
+      <Navbar />
+      {appState === 'start' && <Hero onStart={handleStart} />}
       {appState === 'questionnaire' && (
         <QuestionWizard onComplete={handleComplete} />
       )}
