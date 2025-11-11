@@ -1,8 +1,8 @@
 import { useState } from 'react'
 import QuestionWizard from './components/QuestionWizard'
 import ResultPage from './components/ResultPage'
-import Navbar from './components/Navbar'
-import Hero from './components/Hero'
+import Navbar from './components/Navbar.jsx'
+import Hero from './components/Hero.jsx'
 
 function App() {
   const [appState, setAppState] = useState('start') // 'start', 'questionnaire', 'result'
