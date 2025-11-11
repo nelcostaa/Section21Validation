@@ -1,2 +1,18 @@
-import { processAnswer, getInitialQuestionId } from '../src/utils/questionLogic.js'\n+import { questionnaire } from '../src/data/questionnaire.js'\n+\n+describe('questionLogic basic', () => {\n+  test('initial question exists in questionnaire', () => {\n+    const id = getInitialQuestionId()\n+    const q = questionnaire.questions.find(q => q.id === id)\n+    expect(q).toBeDefined()\n+  })\n+\n+  test('processAnswer returns action for known answer', () => {\n+    const action = processAnswer('1.1', true)\n+    expect(action).toBeDefined()\n+    expect(['next', 'result']).toContain(action.type)\n+  })\n+})\n+\n*** End Patch
+import { processAnswer, getInitialQuestionId } from '../src/utils/questionLogic.js'
+import { questionnaire } from '../src/data/questionnaire.js'
+
+describe('questionLogic basic', () => {
+  test('initial question exists in questionnaire', () => {
+    const id = getInitialQuestionId()
+    const q = questionnaire.questions.find(q => q.id === id)
+    expect(q).toBeDefined()
+  })
+
+  test('processAnswer returns action for known answer', () => {
+    const action = processAnswer('1.1', true)
+    expect(action).toBeDefined()
+    expect(['next', 'result']).toContain(action.type)
+  })
+})
+
 
