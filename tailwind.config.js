@@ -8,7 +8,7 @@ export default {
     extend: {
       colors: {
         // Design tokens — replace with exact HEXs from your Figma/asset inspector if you have them
-        'noble-light-green': '#DFF2E1',
+        'noble-light-green': '#a0f1bd',
         'noble-dark-green': '#364D3F',
       },
     },
