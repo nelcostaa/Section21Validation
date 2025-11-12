@@ -3,7 +3,8 @@ import react from '@vitejs/plugin-react'
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  base: '/Section21Validation/',
+  // Use relative base so the site works whether hosted at repo subpath or root
+  base: './',
   plugins: [react()],
 })
 
