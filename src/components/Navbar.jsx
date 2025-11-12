@@ -9,7 +9,7 @@ export default function Navbar() {
           <div className="flex items-center">
             <a href="/" aria-label="Home">
             <span className="inline-flex items-center justify-center bg-noble-dark-green rounded p-1">
-                <img src="/site_logo.png" alt="HMO Landlord Safeguarding Service" className="h-8" />
+                <img src="./site_logo.png" alt="HMO Landlord Safeguarding Service" className="h-8" />
               </span>
             </a>
           </div>

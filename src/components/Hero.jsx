@@ -27,7 +27,7 @@ export default function Hero({ onStart }) {
         {/* --- Right Column: Graphic --- */}
         <div className="flex justify-center items-center">
           <img
-            src="/James-Portrait-3-724x1024-3-694x1024.webp"
+            src="./James-Portrait-3-724x1024-3-694x1024.webp"
             alt="James portrait"
             className="w-80 h-80 object-cover rounded-full border-2 border-black/60"
           />
