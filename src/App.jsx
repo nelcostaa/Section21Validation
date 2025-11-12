@@ -2,6 +2,7 @@ import { useState } from 'react'
 import QuestionWizard from './components/QuestionWizard'
 import ResultPage from './components/ResultPage'
 import Navbar from './components/Navbar.jsx'
+import Footer from './components/Footer.jsx'
 import Hero from './components/Hero.jsx'
 
 function App() {
@@ -23,15 +24,18 @@ function App() {
   }
 
   return (
-    <div className="min-h-screen bg-simple-beige text-simple-dark">
+    <div className="min-h-screen bg-simple-beige text-simple-dark flex flex-col">
       <Navbar />
-      {appState === 'start' && <Hero onStart={handleStart} />}
-      {appState === 'questionnaire' && (
-        <QuestionWizard onComplete={handleComplete} />
-      )}
-      {appState === 'result' && (
-        <ResultPage result={wizardState} onRestart={handleRestart} />
-      )}
+      <main className="flex-grow">
+        {appState === 'start' && <Hero onStart={handleStart} />}
+        {appState === 'questionnaire' && (
+          <QuestionWizard onComplete={handleComplete} />
+        )}
+        {appState === 'result' && (
+          <ResultPage result={wizardState} onRestart={handleRestart} />
+        )}
+      </main>
+      <Footer />
     </div>
   )
 }

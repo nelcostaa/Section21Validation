@@ -2,14 +2,15 @@ import { useReducer, useEffect } from 'react'
 import QuestionCard from './QuestionCard'
 import ProgressIndicator from './ProgressIndicator'
 import { getQuestionById } from '../data/questionnaire'
-import { getInitialQuestionId, processAnswer, isResultAction } from '../utils/questionLogic'
+import { getInitialQuestionId, processAnswer, isResultAction, getNextSequentialQuestionId, aggregateResultActions } from '../utils/questionLogic'
 
 const initialState = {
   currentQuestionId: getInitialQuestionId(),
   answers: new Map(),
   pathHistory: [getInitialQuestionId()],
   result: null,
-  invalidReason: null
+  invalidReason: null,
+  pendingResults: []
 }
 
 const wizardReducer = (state, action) => {
@@ -17,17 +18,34 @@ const wizardReducer = (state, action) => {
     case 'ANSWER_QUESTION':
       const { questionId, answerValue } = action.payload
       const actionResult = processAnswer(questionId, answerValue)
-      
+
       const newAnswers = new Map(state.answers)
       newAnswers.set(questionId, answerValue)
-      
+
       if (isResultAction(actionResult)) {
-        return {
-          ...state,
-          answers: newAnswers,
-          pathHistory: [...state.pathHistory, questionId],
-          result: actionResult.result,
-          invalidReason: actionResult.reason || null
+        // Record the result action (include questionId) but continue through the questionnaire sequentially.
+        const newPending = [...(state.pendingResults || []), { ...actionResult, questionId }]
+        const nextSeq = getNextSequentialQuestionId(questionId)
+
+        if (nextSeq) {
+          return {
+            ...state,
+            answers: newAnswers,
+            pendingResults: newPending,
+            pathHistory: [...state.pathHistory, questionId, nextSeq],
+            currentQuestionId: nextSeq
+          }
+        } else {
+          // No more questions: aggregate pending results to determine final outcome.
+          const final = aggregateResultActions(newPending)
+          return {
+            ...state,
+            answers: newAnswers,
+            pathHistory: [...state.pathHistory, questionId],
+            result: final.result,
+            invalidReason: final.reasons || null,
+            pendingResults: newPending
+          }
         }
       } else {
         return {
@@ -67,7 +85,7 @@ const QuestionWizard = ({ onComplete }) => {
     if (state.result) {
       onComplete({
         result: state.result,
-        reason: state.invalidReason,
+        reasons: state.invalidReason || [],
         answers: Object.fromEntries(state.answers),
         pathHistory: state.pathHistory
       })

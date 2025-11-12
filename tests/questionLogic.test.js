@@ -1,3 +1,4 @@
+import { describe, test, expect } from 'vitest'
 import { processAnswer, getInitialQuestionId } from '../src/utils/questionLogic.js'
 import { questionnaire } from '../src/data/questionnaire.js'
 

@@ -26,15 +26,11 @@ export default function Hero({ onStart }) {
 
         {/* --- Right Column: Graphic --- */}
         <div className="flex justify-center items-center">
-          <div className="relative w-72 h-72 bg-simple-dark rounded-full flex justify-center items-center">
-            {/* Horizontal Line */}
-            <div className="absolute w-full h-px bg-simple-beige"></div>
-            {/* Vertical Line */}
-            <div className="absolute h-full w-px bg-simple-beige"></div>
-            {/* The dots */}
-            <div className="absolute w-6 h-6 bg-simple-beige rounded-full top-[20%] right-[20%]"></div>
-            <div className="absolute w-6 h-6 bg-simple-beige rounded-full bottom-[20%] left-[20%]"></div>
-          </div>
+          <img
+            src="/James-Portrait-3-724x1024-3-694x1024.webp"
+            alt="James portrait"
+            className="w-80 h-80 object-cover rounded-full border-2 border-black/60"
+          />
         </div>
 
       </div>
