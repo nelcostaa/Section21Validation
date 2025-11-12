@@ -2,6 +2,9 @@
 
 A concise, client-side React wizard that helps landlords assess whether a Section 21 notice is valid. It walks the user through a decision-tree questionnaire based on UK legislation, explains the reasoning for each question, and returns a clear VALID / INVALID / GREY-AREA outcome with an explanation.
 
+<!-- GitHub Actions Pages deploy status -->
+[![Pages Deploy](https://github.com/jameshunt8082/Section21Validation/actions/workflows/deploy.yml/badge.svg)](https://github.com/jameshunt8082/Section21Validation/actions/workflows/deploy.yml)
+
 Short blurb for posting (Gemini / social):
 > Section 21 Notice Validity Checker — a lightweight React + Tailwind wizard that guides landlords through the key statutory checks for serving a Section 21 notice in England. Fast, privacy-first, and educational: answers are processed in the browser and the app explains why a notice may be invalid.
 
