@@ -91,39 +91,75 @@ const ResultPage = ({ result, onRestart }) => {
             )}
           </div>
 
-          {result.reasons && result.reasons.length > 0 && (
-            <div className="p-6 rounded-lg mb-6 bg-white border border-gray-100">
-              <h2 className="font-semibold text-lg mb-4">Checklist</h2>
+          {result.reasons && result.reasons.length > 0 && (() => {
+            const invalids = result.reasons.filter(r => r.type === 'INVALID')
+            const greys = result.reasons.filter(r => r.type === 'GREY_AREA')
+            const valids = result.reasons.filter(r => r.type === 'VALID')
+            return (
               <div className="space-y-6">
-                {result.reasons.map((r, i) => (
-                  <div key={`reason-${i}`} className="bg-gray-50 p-4 rounded">
-                    <div className="text-sm text-gray-600 mb-1">
-                      <strong>Section {r.sectionId}.</strong> Question {r.questionId}.
+                {invalids.length > 0 && (
+                  <div className="p-6 rounded-lg mb-6 bg-white border border-red-100">
+                    <h2 className="font-semibold text-lg mb-4 text-red-700">Invalid Questions</h2>
+                    <div className="space-y-4">
+                      {invalids.map((r, i) => (
+                        <div key={`invalid-${i}`} className="bg-gray-50 p-4 rounded">
+                          <div className="text-sm text-gray-600 mb-1">
+                            <strong>Section {r.sectionId}.</strong> Question {r.questionId}.
+                          </div>
+                          <div className="font-medium text-gray-900 mb-1">{r.questionText}</div>
+                          <div className="text-sm text-gray-700 mb-2">
+                            <span className="font-semibold">You answered:</span> {r.answer}
+                          </div>
+                          <div className="text-sm text-red-700">
+                            <span className="font-semibold">Invalid:</span> {r.reason}
+                          </div>
+                        </div>
+                      ))}
                     </div>
-                    <div className="font-medium text-gray-900 mb-1">{r.questionText}</div>
-                    <div className="text-sm text-gray-700 mb-2">
-                      <span className="font-semibold">You answered:</span> {r.answer}
-                    </div>
-                    {r.type === 'INVALID' && (
-                      <div className="text-sm text-red-700">
-                        <span className="font-semibold">Invalid:</span> {r.reason}
-                      </div>
-                    )}
-                    {r.type === 'GREY_AREA' && (
-                      <div className="text-sm text-yellow-700">
-                        <span className="font-semibold">Note:</span> {r.reason}
-                      </div>
-                    )}
-                    {r.type === 'VALID' && r.reason && (
-                      <div className="text-sm text-green-700">
-                        <span className="font-semibold">Passed:</span> {r.reason}
-                      </div>
-                    )}
                   </div>
-                ))}
+                )}
+
+                {(greys.length > 0 || valids.length > 0) && (
+                  <div className="p-6 rounded-lg mb-6 bg-white border border-gray-100">
+                    <h2 className="font-semibold text-lg mb-4">Passed / Notes</h2>
+                    <div className="space-y-4">
+                      {greys.map((r, i) => (
+                        <div key={`grey-${i}`} className="bg-gray-50 p-4 rounded">
+                          <div className="text-sm text-gray-600 mb-1">
+                            <strong>Section {r.sectionId}.</strong> Question {r.questionId}.
+                          </div>
+                          <div className="font-medium text-gray-900 mb-1">{r.questionText}</div>
+                          <div className="text-sm text-gray-700 mb-2">
+                            <span className="font-semibold">You answered:</span> {r.answer}
+                          </div>
+                          <div className="text-sm text-yellow-700">
+                            <span className="font-semibold">Note:</span> {r.reason}
+                          </div>
+                        </div>
+                      ))}
+
+                      {valids.map((r, i) => (
+                        <div key={`valid-${i}`} className="bg-gray-50 p-4 rounded">
+                          <div className="text-sm text-gray-600 mb-1">
+                            <strong>Section {r.sectionId}.</strong> Question {r.questionId}.
+                          </div>
+                          <div className="font-medium text-gray-900 mb-1">{r.questionText}</div>
+                          <div className="text-sm text-gray-700 mb-2">
+                            <span className="font-semibold">You answered:</span> {r.answer}
+                          </div>
+                          {r.reason && (
+                            <div className="text-sm text-green-700">
+                              <span className="font-semibold">Passed:</span> {r.reason}
+                            </div>
+                          )}
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
               </div>
-            </div>
-          )}
+            )
+          })()}
 
           {/* Collected answers */}
           {result.answers && Object.keys(result.answers).length > 0 && (
