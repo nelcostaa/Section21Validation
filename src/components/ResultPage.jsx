@@ -120,8 +120,8 @@ const ResultPage = ({ result, onRestart }) => {
                 )}
 
                 {(greys.length > 0 || valids.length > 0) && (
-                  <div className="p-6 rounded-lg mb-6 bg-white border border-gray-100">
-                    <h2 className="font-semibold text-lg mb-4">Passed / Notes</h2>
+                  <div className="p-6 rounded-lg mb-6 bg-white border border-green-100">
+                    <h2 className="font-semibold text-lg mb-4 text-green-700">Passed / Notes</h2>
                     <div className="space-y-4">
                       {greys.map((r, i) => (
                         <div key={`grey-${i}`} className="bg-gray-50 p-4 rounded">
