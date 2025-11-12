@@ -1,43 +1,42 @@
 import React from 'react'
 
-// Temporary inline SVG placeholder for the globe graphic.
-// Replace with an asset import (e.g. ../assets/globe.png) when you add the real image.
 export default function Hero({ onStart }) {
   return (
-    <div className="container mx-auto px-6 py-16 md:py-24">
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-        <div className="flex flex-col gap-6">
-          <h1 className="text-5xl md:text-6xl font-bold text-white leading-tight">
+    <div className="container mx-auto px-6 py-24 min-h-screen flex items-center">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
+
+        {/* --- Left Column: Text --- */}
+        <div className="flex flex-col gap-6 text-center md:text-left">
+          <h1 className="text-5xl md:text-6xl font-bold text-simple-dark leading-tight">
             Section 21 Notice Validity Checker
           </h1>
-          <p className="text-lg text-white">
+          <p className="text-lg text-simple-dark opacity-80">
             Answer a few quick questions to assess whether a Section 21 notice is valid. Get clear guidance and next steps.
           </p>
+          {/* Button container */}
           <div className="mt-4">
             <button
               onClick={onStart}
-              className="bg-white text-noble-dark-green px-6 py-3 rounded-full font-semibold hover:opacity-90 transition-colors"
+              className="bg-simple-dark text-simple-beige px-8 py-4 rounded-full text-lg font-semibold hover:bg-opacity-90 transition-colors"
             >
               Start the assessment
             </button>
           </div>
         </div>
-        <div className="flex justify-center md:justify-end">
-          {/* Simple globe-like SVG placeholder — replace when you add the asset */}
-          <svg
-            viewBox="0 0 200 200"
-            className="w-full max-w-lg"
-            xmlns="http://www.w3.org/2000/svg"
-            role="img"
-            aria-label="Globe placeholder"
-          >
-            <circle cx="100" cy="100" r="90" fill="#6fc3a6" />
-            <path d="M10 100h180" stroke="#2f5a46" strokeWidth="3" />
-            <path d="M100 10v180" stroke="#2f5a46" strokeWidth="3" />
-            <circle cx="140" cy="60" r="9" fill="#f7d6b0" />
-            <circle cx="70" cy="140" r="9" fill="#f7d6b0" />
-          </svg>
+
+        {/* --- Right Column: Graphic --- */}
+        <div className="flex justify-center items-center">
+          <div className="relative w-72 h-72 bg-simple-dark rounded-full flex justify-center items-center">
+            {/* Horizontal Line */}
+            <div className="absolute w-full h-px bg-simple-beige"></div>
+            {/* Vertical Line */}
+            <div className="absolute h-full w-px bg-simple-beige"></div>
+            {/* The dots */}
+            <div className="absolute w-6 h-6 bg-simple-beige rounded-full top-[20%] right-[20%]"></div>
+            <div className="absolute w-6 h-6 bg-simple-beige rounded-full bottom-[20%] left-[20%]"></div>
+          </div>
         </div>
+
       </div>
     </div>
   )
