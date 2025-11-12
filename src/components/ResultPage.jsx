@@ -161,63 +161,7 @@ const ResultPage = ({ result, onRestart }) => {
             )
           })()}
 
-          {/* Collected answers */}
-          {result.answers && Object.keys(result.answers).length > 0 && (
-            <div className="p-6 rounded-lg mb-6 bg-white border border-gray-100">
-              <h2 className="font-semibold text-lg mb-4">Your answers</h2>
-              <ul className="space-y-3">
-                {(result.pathHistory || Object.keys(result.answers)).filter((id, idx, arr) => arr.indexOf(id) === idx).map((qid) => {
-                  const q = getQuestionById(qid)
-                  const val = result.answers[qid]
-                  const selectedText = q?.answers?.find(a => a.value === val)?.text || String(val)
-                  let badge = { color: 'green', text: 'Passed' }
-                  try {
-                    const action = processAnswer(qid, val)
-                    if (action.type === 'result') {
-                      if (action.result === 'INVALID') badge = { color: 'red', text: 'Issue' }
-                      else if (action.result === 'GREY_AREA') badge = { color: 'yellow', text: 'Grey area' }
-                      else badge = { color: 'green', text: 'Passed' }
-                    }
-                  } catch (e) {
-                    // leave badge as default if processing fails
-                  }
-
-                  return (
-                    <li key={qid} className="flex items-start justify-between gap-4">
-                      <div className="flex items-start gap-3">
-                        <div className="mt-1">
-                          {badge.color === 'green' && (
-                            <svg className="h-5 w-5 text-green-600" fill="currentColor" viewBox="0 0 20 20">
-                              <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414L8.414 15.414a1 1 0 01-1.414 0L3.293 11.707a1 1 0 011.414-1.414L7 12.586l8.293-8.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                            </svg>
-                          )}
-                          {badge.color === 'red' && (
-                            <svg className="h-5 w-5 text-red-600" fill="currentColor" viewBox="0 0 20 20">
-                              <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm-1.414-9.414a1 1 0 011.414 0L10 9.172l.586-.586a1 1 0 111.414 1.414L11.414 10.586l.586.586a1 1 0 11-1.414 1.414L10 12l-.586.586a1 1 0 11-1.414-1.414l.586-.586-.586-.586a1 1 0 010-1.414z" clipRule="evenodd" />
-                            </svg>
-                          )}
-                          {badge.color === 'yellow' && (
-                            <svg className="h-5 w-5 text-yellow-600" fill="currentColor" viewBox="0 0 20 20">
-                              <path d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.454 9.695A1.75 1.75 0 0116.986 15H3.014a1.75 1.75 0 01-1.211-2.206L7.257 3.1zM11 13a1 1 0 10-2 0 1 1 0 002 0zm-1-9a.75.75 0 00-.75.75v4.5a.75.75 0 001.5 0v-4.5A.75.75 0 0010 4z" />
-                            </svg>
-                          )}
-                        </div>
-                        <div>
-                          <div className="text-sm font-medium text-gray-900">{q ? q.questionText.replace(/\*\*(.*?)\*\*/g, '$1') : qid}</div>
-                          <div className="text-xs text-gray-500">{selectedText}</div>
-                        </div>
-                      </div>
-                      <div>
-                        <span className={`inline-flex items-center px-2 py-1 text-xs font-semibold rounded ${badge.color === 'green' ? 'bg-green-100 text-green-800' : badge.color === 'red' ? 'bg-red-100 text-red-800' : 'bg-yellow-100 text-yellow-800'}`}>
-                          {badge.text}
-                        </span>
-                      </div>
-                    </li>
-                  )
-                })}
-              </ul>
-            </div>
-          )}
+          
 
           {isInvalid && (
             <div className="bg-blue-50 border-l-4 border-blue-500 p-4 mb-6">
