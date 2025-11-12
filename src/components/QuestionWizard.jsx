@@ -36,14 +36,51 @@ const wizardReducer = (state, action) => {
             currentQuestionId: nextSeq
           }
         } else {
-          // No more questions: aggregate pending results to determine final outcome.
+          // No more questions: build detailed reasons for all answered questions (durable source of truth)
+          const answeredIds = Array.from(newAnswers.keys())
+          const detailed = answeredIds.map((qid) => {
+            const q = getQuestionById(qid)
+            const val = newAnswers.get(qid)
+            const selectedText = q?.answers?.find(a => a.value === val)?.text || String(val)
+            let action = null
+            try {
+              action = processAnswer(qid, val)
+            } catch (e) {
+              action = null
+            }
+
+            if (action && action.type === 'result') {
+              return {
+                questionId: qid,
+                sectionId: q?.sectionId || null,
+                questionText: q?.questionText.replace(/\*\*(.*?)\*\*/g, '$1') || qid,
+                answer: selectedText,
+                type: action.result,
+                reason: action.reason || null
+              }
+            }
+
+            return {
+              questionId: qid,
+              sectionId: q?.sectionId || null,
+              questionText: q?.questionText.replace(/\*\*(.*?)\*\*/g, '$1') || qid,
+              answer: selectedText,
+              type: 'VALID',
+              reason: q?.learningPoint || null
+            }
+          })
+
+          // decide final overall result by severity
           const final = aggregateResultActions(newPending)
+          const overall = final.result
+
           return {
             ...state,
             answers: newAnswers,
             pathHistory: [...state.pathHistory, questionId],
-            result: final.result,
-            invalidReason: final.reasons || null,
+            result: overall,
+            invalidReason: null,
+            reasons: detailed,
             pendingResults: newPending
           }
         }
@@ -85,7 +122,7 @@ const QuestionWizard = ({ onComplete }) => {
     if (state.result) {
       onComplete({
         result: state.result,
-        reasons: state.invalidReason || [],
+        reasons: state.reasons || [],
         answers: Object.fromEntries(state.answers),
         pathHistory: state.pathHistory
       })

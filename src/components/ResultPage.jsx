@@ -1,4 +1,6 @@
 import { calculateScore } from '../utils/scoring'
+import { getQuestionById } from '../data/questionnaire'
+import { processAnswer } from '../utils/questionLogic'
 
 const ResultPage = ({ result, onRestart }) => {
   const isValid = result.result === 'VALID'
@@ -92,49 +94,92 @@ const ResultPage = ({ result, onRestart }) => {
           {result.reasons && result.reasons.length > 0 && (
             <div className="p-6 rounded-lg mb-6 bg-white border border-gray-100">
               <h2 className="font-semibold text-lg mb-4">Checklist</h2>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div>
-                  <h3 className="text-sm font-semibold text-green-700 mb-2">Passed</h3>
-                  <ul className="space-y-2">
-                    {result.reasons.filter(r => r.type === 'VALID').map((r, i) => (
-                      <li key={`valid-${i}`} className="flex items-start gap-3">
-                        <div className="mt-1">
-                          <svg className="h-5 w-5 text-green-600" fill="currentColor" viewBox="0 0 20 20">
-                            <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414L8.414 15.414a1 1 0 01-1.414 0L3.293 11.707a1 1 0 011.414-1.414L7 12.586l8.293-8.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                          </svg>
-                        </div>
-                        <div className="text-sm text-gray-700">{r.reason}</div>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-
-                <div>
-                  <h3 className="text-sm font-semibold text-red-700 mb-2">Issues</h3>
-                  <ul className="space-y-2">
-                    {result.reasons.filter(r => r.type === 'INVALID').map((r, i) => (
-                      <li key={`invalid-${i}`} className="flex items-start gap-3">
-                        <div className="mt-1">
-                          <svg className="h-5 w-5 text-red-600" fill="currentColor" viewBox="0 0 20 20">
-                            <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm-1.414-9.414a1 1 0 011.414 0L10 9.172l.586-.586a1 1 0 111.414 1.414L11.414 10.586l.586.586a1 1 0 11-1.414 1.414L10 12l-.586.586a1 1 0 11-1.414-1.414l.586-.586-.586-.586a1 1 0 010-1.414z" clipRule="evenodd" />
-                          </svg>
-                        </div>
-                        <div className="text-sm text-gray-700">{r.reason}</div>
-                      </li>
-                    ))}
-                    {result.reasons.filter(r => r.type === 'GREY_AREA').map((r, i) => (
-                      <li key={`grey-${i}`} className="flex items-start gap-3">
-                        <div className="mt-1">
-                          <svg className="h-5 w-5 text-yellow-600" fill="currentColor" viewBox="0 0 20 20">
-                            <path d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.454 9.695A1.75 1.75 0 0116.986 15H3.014a1.75 1.75 0 01-1.211-2.206L7.257 3.1zM11 13a1 1 0 10-2 0 1 1 0 002 0zm-1-9a.75.75 0 00-.75.75v4.5a.75.75 0 001.5 0v-4.5A.75.75 0 0010 4z" />
-                          </svg>
-                        </div>
-                        <div className="text-sm text-gray-700">{r.reason}</div>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
+              <div className="space-y-6">
+                {result.reasons.map((r, i) => (
+                  <div key={`reason-${i}`} className="bg-gray-50 p-4 rounded">
+                    <div className="text-sm text-gray-600 mb-1">
+                      <strong>Section {r.sectionId}.</strong> Question {r.questionId}.
+                    </div>
+                    <div className="font-medium text-gray-900 mb-1">{r.questionText}</div>
+                    <div className="text-sm text-gray-700 mb-2">
+                      <span className="font-semibold">You answered:</span> {r.answer}
+                    </div>
+                    {r.type === 'INVALID' && (
+                      <div className="text-sm text-red-700">
+                        <span className="font-semibold">Invalid:</span> {r.reason}
+                      </div>
+                    )}
+                    {r.type === 'GREY_AREA' && (
+                      <div className="text-sm text-yellow-700">
+                        <span className="font-semibold">Note:</span> {r.reason}
+                      </div>
+                    )}
+                    {r.type === 'VALID' && r.reason && (
+                      <div className="text-sm text-green-700">
+                        <span className="font-semibold">Passed:</span> {r.reason}
+                      </div>
+                    )}
+                  </div>
+                ))}
               </div>
+            </div>
+          )}
+
+          {/* Collected answers */}
+          {result.answers && Object.keys(result.answers).length > 0 && (
+            <div className="p-6 rounded-lg mb-6 bg-white border border-gray-100">
+              <h2 className="font-semibold text-lg mb-4">Your answers</h2>
+              <ul className="space-y-3">
+                {(result.pathHistory || Object.keys(result.answers)).filter((id, idx, arr) => arr.indexOf(id) === idx).map((qid) => {
+                  const q = getQuestionById(qid)
+                  const val = result.answers[qid]
+                  const selectedText = q?.answers?.find(a => a.value === val)?.text || String(val)
+                  let badge = { color: 'green', text: 'Passed' }
+                  try {
+                    const action = processAnswer(qid, val)
+                    if (action.type === 'result') {
+                      if (action.result === 'INVALID') badge = { color: 'red', text: 'Issue' }
+                      else if (action.result === 'GREY_AREA') badge = { color: 'yellow', text: 'Grey area' }
+                      else badge = { color: 'green', text: 'Passed' }
+                    }
+                  } catch (e) {
+                    // leave badge as default if processing fails
+                  }
+
+                  return (
+                    <li key={qid} className="flex items-start justify-between gap-4">
+                      <div className="flex items-start gap-3">
+                        <div className="mt-1">
+                          {badge.color === 'green' && (
+                            <svg className="h-5 w-5 text-green-600" fill="currentColor" viewBox="0 0 20 20">
+                              <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414L8.414 15.414a1 1 0 01-1.414 0L3.293 11.707a1 1 0 011.414-1.414L7 12.586l8.293-8.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                            </svg>
+                          )}
+                          {badge.color === 'red' && (
+                            <svg className="h-5 w-5 text-red-600" fill="currentColor" viewBox="0 0 20 20">
+                              <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm-1.414-9.414a1 1 0 011.414 0L10 9.172l.586-.586a1 1 0 111.414 1.414L11.414 10.586l.586.586a1 1 0 11-1.414 1.414L10 12l-.586.586a1 1 0 11-1.414-1.414l.586-.586-.586-.586a1 1 0 010-1.414z" clipRule="evenodd" />
+                            </svg>
+                          )}
+                          {badge.color === 'yellow' && (
+                            <svg className="h-5 w-5 text-yellow-600" fill="currentColor" viewBox="0 0 20 20">
+                              <path d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.454 9.695A1.75 1.75 0 0116.986 15H3.014a1.75 1.75 0 01-1.211-2.206L7.257 3.1zM11 13a1 1 0 10-2 0 1 1 0 002 0zm-1-9a.75.75 0 00-.75.75v4.5a.75.75 0 001.5 0v-4.5A.75.75 0 0010 4z" />
+                            </svg>
+                          )}
+                        </div>
+                        <div>
+                          <div className="text-sm font-medium text-gray-900">{q ? q.questionText.replace(/\*\*(.*?)\*\*/g, '$1') : qid}</div>
+                          <div className="text-xs text-gray-500">{selectedText}</div>
+                        </div>
+                      </div>
+                      <div>
+                        <span className={`inline-flex items-center px-2 py-1 text-xs font-semibold rounded ${badge.color === 'green' ? 'bg-green-100 text-green-800' : badge.color === 'red' ? 'bg-red-100 text-red-800' : 'bg-yellow-100 text-yellow-800'}`}>
+                          {badge.text}
+                        </span>
+                      </div>
+                    </li>
+                  )
+                })}
+              </ul>
             </div>
           )}
 
