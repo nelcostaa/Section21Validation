@@ -6,19 +6,19 @@ export default function Footer() {
       <div className="container mx-auto px-6 py-10">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           <div>
-            <h3 className="text-lg font-semibold mb-3">Contact</h3>
-            <p className="text-sm">Email: <a href="mailto:info@example.com" className="text-orange-accent-dark hover:text-orange-accent-light transition-colors">info@example.com</a></p>
-            <p className="text-sm">Phone: <a href="tel:+441234567890" className="text-orange-accent-dark hover:text-orange-accent-light transition-colors">+44 1234 567890</a></p>
-            <p className="text-sm mt-2">Address: 123 Example St, London</p>
+            <h3 className="text-lg font-semibold mb-3 text-simple-dark bg-gradient-to-r from-orange-accent-dark to-orange-accent-light bg-clip-text text-transparent">Contact</h3>
+            <p className="text-sm text-simple-dark">Email: <a href="mailto:info@example.com" className="text-orange-accent-dark hover:text-orange-accent-light transition-colors">info@example.com</a></p>
+            <p className="text-sm text-simple-dark">Phone: <a href="tel:+441234567890" className="text-orange-accent-dark hover:text-orange-accent-light transition-colors">+44 1234 567890</a></p>
+            <p className="text-sm text-simple-dark mt-2">Address: 123 Example St, London</p>
           </div>
 
           <div>
-            <h3 className="text-lg font-semibold mb-3">About</h3>
+            <h3 className="text-lg font-semibold mb-3 text-simple-dark bg-gradient-to-r from-orange-accent-dark to-orange-accent-light bg-clip-text text-transparent">About</h3>
             <p className="text-sm text-simple-dark">Placeholder text about the HMO Landlord Safeguarding Service. Replace with real copy.</p>
           </div>
 
           <div className="md:text-right">
-            <h3 className="text-lg font-semibold mb-3">Follow us</h3>
+            <h3 className="text-lg font-semibold mb-3 text-simple-dark bg-gradient-to-r from-orange-accent-dark to-orange-accent-light bg-clip-text text-transparent md:text-right">Follow us</h3>
             <div className="flex items-center gap-4 mt-2 md:justify-end">
               {/* Social icon placeholders - replace hrefs with real profiles */}
               <a href="#" aria-label="Twitter" className="text-orange-accent-dark hover:text-orange-accent-light transition-colors" title="Twitter">
