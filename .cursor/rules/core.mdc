@@ -69,6 +69,8 @@ All documentation is useful for context but verify against actual code. The code
 
 **Commit messages:** Concise, technically descriptive. Explain WHAT changed and WHY. Use proper technical terminology.
 
+**Regular commits:** Commit changes regularly after significant work is completed. Don't accumulate uncommitted changes. After completing a feature, fixing a bug, or making substantial changes, commit with a descriptive message. This maintains a clean git history and allows for easier rollback if needed.
+
 **Response style:** Direct, actionable, no preamble. During work: minimal commentary, focus on action. After significant work: concise summary with file:line references.
 
 <examples>
