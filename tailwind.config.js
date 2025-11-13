@@ -11,7 +11,7 @@ export default {
         'noble-light-green': '#F7F3F0',
         'noble-dark-green': '#3A3A3A',
       // Simple/beige theme tokens
-      'simple-beige': '#efe6df',
+      'simple-beige': '#fff8f2',
       'simple-dark': '#2b2b2b',
       // Orange gradient accent colors (tuned warm terracotta tones)
       'orange-accent-light': '#E6B89A',

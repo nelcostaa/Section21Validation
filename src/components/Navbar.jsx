@@ -3,7 +3,7 @@ import React from 'react'
 export default function Navbar() {
   return (
     <>
-      <nav style={{ backgroundColor: '#efe6df' }}>
+      <nav style={{ backgroundColor: '#fff8f2' }}>
         <div className="container mx-auto px-6 py-4 flex justify-between items-center">
           {/* Use public asset at /site_logo.png — place your @site_logo.png at public/site_logo.png */}
           <div className="flex items-center">

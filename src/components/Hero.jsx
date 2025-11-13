@@ -2,7 +2,7 @@ import React from 'react'
 
 export default function Hero({ onStart }) {
   return (
-    <div className="relative min-h-screen flex items-center w-full" style={{ backgroundColor: '#efe6df' }}>
+    <div className="relative min-h-screen flex items-center w-full" style={{ backgroundColor: '#fff8f2' }}>
       {/* Background image */}
       <img
         src="./background.png"
