@@ -10,7 +10,7 @@ const ResultPage = ({ result, onRestart }) => {
   const score = calculateScore(result.answers, result.pathHistory, result.result)
 
   return (
-    <div className="min-h-screen bg-simple-beige py-8 px-4">
+    <div className="min-h-screen py-8 px-4" style={{ backgroundColor: '#fff8f2' }}>
       <div className="max-w-3xl mx-auto">
         <div className={`bg-white rounded-lg shadow-lg p-8 md:p-12 ${
           isValid ? 'border-l-4 border-green-500' : 
