@@ -3,10 +3,7 @@ import React from 'react'
 export default function Hero({ onStart }) {
   return (
     <div className="relative min-h-screen flex items-center w-full" style={{ backgroundColor: '#efe6df' }}>
-      {/* Orange gradient accent decorative element (subtle, only on right edge) */}
-      <div className="absolute top-0 right-0 w-1/4 h-full bg-gradient-to-br from-orange-accent-light/20 to-orange-accent-dark/10 pointer-events-none" style={{ zIndex: 1 }}></div>
-      
-      <div className="container mx-auto px-6 py-24 relative bg-transparent" style={{ zIndex: 2 }}>
+      <div className="container mx-auto px-6 py-24 relative bg-transparent">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
 
           {/* --- Left Column: Graphic --- */}
