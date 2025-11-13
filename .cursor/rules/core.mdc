@@ -69,6 +69,21 @@ All documentation is useful for context but verify against actual code. The code
 
 **Commit messages:** Concise, technically descriptive. Explain WHAT changed and WHY. Use proper technical terminology.
 
+**Commit message format:** Use conventional commit prefixes to categorize changes:
+- `fix:` - Bug fixes
+- `feat:` or `add:` - New features
+- `update:` or `chore:` - Updates, maintenance, or non-functional changes
+- `style:` - Code style changes (formatting, whitespace, etc.)
+- `refactor:` - Code refactoring without changing functionality
+- `docs:` - Documentation changes
+- `test:` - Adding or updating tests
+- `ci:` - CI/CD configuration changes
+- `cd:` - Deployment-related changes
+- `perf:` - Performance improvements
+- `revert:` - Reverting previous commits
+
+Format: `<prefix>: <description>`. Example: `fix: resolve background image 403 error by using img element instead of CSS url()`
+
 **Regular commits:** Commit changes regularly after significant work is completed. Don't accumulate uncommitted changes. After completing a feature, fixing a bug, or making substantial changes, commit with a descriptive message. This maintains a clean git history and allows for easier rollback if needed.
 
 **Response style:** Direct, actionable, no preamble. During work: minimal commentary, focus on action. After significant work: concise summary with file:line references.
