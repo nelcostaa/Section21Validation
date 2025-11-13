@@ -9,12 +9,8 @@ export default function Hero({ onStart }) {
       <img
         src="./background.png"
         alt=""
-        className="absolute inset-0 w-full h-full"
-        style={{ 
-          zIndex: 1,
-          objectFit: 'fill',
-          objectPosition: 'left center'
-        }}
+        className="absolute inset-0 w-full h-full object-cover object-center"
+        style={{ zIndex: 1 }}
       />
       
       {/* Orange gradient accent decorative element (subtle, only on right edge) */}
