@@ -24,9 +24,9 @@ function App() {
   }
 
   return (
-    <div className="min-h-screen bg-simple-beige text-simple-dark flex flex-col">
+    <div className={`min-h-screen text-simple-dark flex flex-col ${appState === 'start' ? '' : 'bg-simple-beige'}`}>
       <Navbar />
-      <main className="flex-grow">
+      <main className="flex-grow bg-transparent">
         {appState === 'start' && <Hero onStart={handleStart} />}
         {appState === 'questionnaire' && (
           <QuestionWizard onComplete={handleComplete} />

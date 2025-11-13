@@ -13,6 +13,12 @@ export default {
       // Simple/beige theme tokens
       'simple-beige': '#efe6df',
       'simple-dark': '#2b2b2b',
+      // Orange gradient accent colors (tuned warm terracotta tones)
+      'orange-accent-light': '#E6B89A',
+      'orange-accent-dark': '#C07A52',
+      },
+      fontFamily: {
+        'playfair': ['Playfair Display', 'Georgia', 'Times New Roman', 'Times', 'serif'],
       },
     },
   },

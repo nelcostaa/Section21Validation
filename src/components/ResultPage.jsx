@@ -110,9 +110,14 @@ const ResultPage = ({ result, onRestart }) => {
                           <div className="text-sm text-gray-700 mb-2">
                             <span className="font-semibold">You answered:</span> {r.answer}
                           </div>
-                          <div className="text-sm text-red-700">
+                          <div className="text-sm text-red-700 mb-2">
                             <span className="font-semibold">Invalid:</span> {r.reason}
                           </div>
+                          {r.actionToTake && (
+                            <div className="text-sm text-blue-700 bg-blue-50 p-3 rounded border-l-2 border-blue-400">
+                              <span className="font-semibold">Action to take:</span> {r.actionToTake}
+                            </div>
+                          )}
                         </div>
                       ))}
                     </div>

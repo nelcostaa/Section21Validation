@@ -40,7 +40,7 @@ export const questionnaire = {
         {
           text: "No",
           value: false,
-          action: { type: "result", result: "INVALID", reason: "Notices served before 1 October 2021 have expired and are no longer valid for starting court proceedings." }
+          action: { type: "result", result: "INVALID", reason: "Notices served before 1 October 2021 have expired and are no longer valid for starting court proceedings.", actionToTake: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua." }
         },
         {
           text: "Yes",
@@ -58,7 +58,7 @@ export const questionnaire = {
         {
           text: "Yes",
           value: true,
-          action: { type: "result", result: "INVALID", reason: "A landlord cannot serve a Section 21 notice within the first four months of the original tenancy agreement. This is to prevent immediate evictions after a tenant moves in." }
+          action: { type: "result", result: "INVALID", reason: "A landlord cannot serve a Section 21 notice within the first four months of the original tenancy agreement. This is to prevent immediate evictions after a tenant moves in.", actionToTake: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris." }
         },
         {
           text: "No",
@@ -76,7 +76,7 @@ export const questionnaire = {
         {
           text: "No",
           value: false,
-          action: { type: "result", result: "INVALID", reason: "The statutory minimum notice period for a Section 21 is two full months. The notice is not valid if it provides less time." }
+          action: { type: "result", result: "INVALID", reason: "The statutory minimum notice period for a Section 21 is two full months. The notice is not valid if it provides less time.", actionToTake: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore." }
         },
         {
           text: "Yes",
@@ -94,7 +94,7 @@ export const questionnaire = {
         {
           text: "Yes",
           value: true,
-          action: { type: "result", result: "INVALID", reason: "A Section 21 notice has a limited lifespan. If court proceedings are not started within 6 months of the notice being served, it expires and a new notice must be issued." }
+          action: { type: "result", result: "INVALID", reason: "A Section 21 notice has a limited lifespan. If court proceedings are not started within 6 months of the notice being served, it expires and a new notice must be issued.", actionToTake: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum." }
         },
         {
           text: "No",
@@ -130,7 +130,7 @@ export const questionnaire = {
         {
           text: "Yes",
           value: true,
-          action: { type: "result", result: "INVALID", reason: "The Tenant Fees Act 2019 bans most upfront fees for tenancies signed on or after 1 June 2019. If you have taken a prohibited payment and not returned it, you cannot serve a valid Section 21 notice." }
+          action: { type: "result", result: "INVALID", reason: "The Tenant Fees Act 2019 bans most upfront fees for tenancies signed on or after 1 June 2019. If you have taken a prohibited payment and not returned it, you cannot serve a valid Section 21 notice.", actionToTake: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium." }
         },
         {
           text: "No",
@@ -166,7 +166,7 @@ export const questionnaire = {
         {
           text: "No",
           value: false,
-          action: { type: "result", result: "INVALID", reason: "For any tenancy starting or renewing after 6 April 2012, the deposit must be protected within 30 days. Failure to do so is a breach that must be remedied by returning the deposit in full before a Section 21 can be served." }
+          action: { type: "result", result: "INVALID", reason: "For any tenancy starting or renewing after 6 April 2012, the deposit must be protected within 30 days. Failure to do so is a breach that must be remedied by returning the deposit in full before a Section 21 can be served.", actionToTake: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt." }
         },
         {
           text: "Yes",
@@ -184,7 +184,7 @@ export const questionnaire = {
         {
           text: "No",
           value: false,
-          action: { type: "result", result: "INVALID", reason: "Protecting the deposit is not enough. You must also provide the tenant with specific details about the scheme used, how to get their deposit back, and what to do in case of a dispute. This is a common point of failure for landlords." }
+          action: { type: "result", result: "INVALID", reason: "Protecting the deposit is not enough. You must also provide the tenant with specific details about the scheme used, how to get their deposit back, and what to do in case of a dispute. This is a common point of failure for landlords.", actionToTake: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione." }
         },
         {
           text: "Yes",
@@ -220,7 +220,7 @@ export const questionnaire = {
         {
           text: "No",
           value: false,
-          action: { type: "result", result: "INVALID", reason: "A valid Gas Safety Certificate must be given to the tenant before they occupy the property. While a late certificate can be remedied before serving the S21, failure to provide one at all is a fatal flaw. See the case of Trecarrell House Limited v Rouncefield [2020]." }
+          action: { type: "result", result: "INVALID", reason: "A valid Gas Safety Certificate must be given to the tenant before they occupy the property. While a late certificate can be remedied before serving the S21, failure to provide one at all is a fatal flaw. See the case of Trecarrell House Limited v Rouncefield [2020].", actionToTake: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Voluptatem sequi nesciunt neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit." }
         },
         {
           text: "Yes",
@@ -238,7 +238,7 @@ export const questionnaire = {
         {
           text: "No",
           value: false,
-          action: { type: "result", result: "INVALID", reason: "An EPC must be given to the tenant at the start of the tenancy. It is valid for 10 years. This is not required for a room in a shared HMO." }
+          action: { type: "result", result: "INVALID", reason: "An EPC must be given to the tenant at the start of the tenancy. It is valid for 10 years. This is not required for a room in a shared HMO.", actionToTake: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem." }
         },
         {
           text: "Yes",
@@ -256,7 +256,7 @@ export const questionnaire = {
         {
           text: "No",
           value: false,
-          action: { type: "result", result: "INVALID", reason: "You must provide the version of the guide that was most current when the tenancy started or was renewed. Failure to do so will invalidate your notice." }
+          action: { type: "result", result: "INVALID", reason: "You must provide the version of the guide that was most current when the tenancy started or was renewed. Failure to do so will invalidate your notice.", actionToTake: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur." }
         },
         {
           text: "Yes",
@@ -292,7 +292,7 @@ export const questionnaire = {
         {
           text: "No",
           value: false,
-          action: { type: "result", result: "INVALID", reason: "It is a criminal offence to operate a licensable HMO without a license. You cannot serve a valid Section 21 notice for an unlicensed HMO." }
+          action: { type: "result", result: "INVALID", reason: "It is a criminal offence to operate a licensable HMO without a license. You cannot serve a valid Section 21 notice for an unlicensed HMO.", actionToTake: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas." }
         },
         {
           text: "Yes",
@@ -310,7 +310,7 @@ export const questionnaire = {
         {
           text: "Yes",
           value: true,
-          action: { type: "result", result: "INVALID", reason: "This is known as 'retaliatory eviction'. If a tenant complains about property conditions and the council agrees by serving a formal notice, any Section 21 served after the initial complaint becomes invalid." }
+          action: { type: "result", result: "INVALID", reason: "This is known as 'retaliatory eviction'. If a tenant complains about property conditions and the council agrees by serving a formal notice, any Section 21 served after the initial complaint becomes invalid.", actionToTake: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores." }
         },
         {
           text: "No",
@@ -328,7 +328,7 @@ export const questionnaire = {
         {
           text: "No",
           value: false,
-          action: { type: "result", result: "INVALID", reason: "For all tenancies in England, the prescribed form for a Section 21 notice is Form 6A. Using an outdated or incorrect form will invalidate the notice." }
+          action: { type: "result", result: "INVALID", reason: "For all tenancies in England, the prescribed form for a Section 21 notice is Form 6A. Using an outdated or incorrect form will invalidate the notice.", actionToTake: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Et harum quidem rerum facilis est et expedita distinctio nam libero tempore, cum soluta nobis est eligendi optio cumque." }
         },
         {
           text: "Yes",
@@ -346,7 +346,7 @@ export const questionnaire = {
         {
           text: "No",
           value: false,
-          action: { type: "result", result: "INVALID", reason: "A Section 21 notice cannot be used to end a tenancy during its fixed term. The date of expiry specified in the notice must be after the fixed-term contract has ended." }
+          action: { type: "result", result: "INVALID", reason: "A Section 21 notice cannot be used to end a tenancy during its fixed term. The date of expiry specified in the notice must be after the fixed-term contract has ended.", actionToTake: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nihil impedit quo minus id quod maxime placeat facere possimus, omnis voluptas assumenda est, omnis dolor repellendus." }
         },
         {
           text: "Yes",

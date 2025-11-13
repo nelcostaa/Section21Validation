@@ -56,7 +56,8 @@ const wizardReducer = (state, action) => {
                 questionText: q?.questionText.replace(/\*\*(.*?)\*\*/g, '$1') || qid,
                 answer: selectedText,
                 type: action.result,
-                reason: action.reason || null
+                reason: action.reason || null,
+                actionToTake: action.actionToTake || null
               }
             }
 
