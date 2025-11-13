@@ -3,7 +3,15 @@ import React from 'react'
 export default function Hero({ onStart }) {
   return (
     <div className="relative min-h-screen flex items-center w-full" style={{ backgroundColor: '#efe6df' }}>
-      <div className="container mx-auto px-6 py-24 relative bg-transparent">
+      {/* Background image */}
+      <img
+        src="./background.png"
+        alt=""
+        className="absolute inset-0 w-full h-full object-cover object-center"
+        style={{ zIndex: 0 }}
+      />
+      
+      <div className="container mx-auto px-6 py-24 relative bg-transparent" style={{ zIndex: 1 }}>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
 
           {/* --- Left Column: Graphic --- */}
