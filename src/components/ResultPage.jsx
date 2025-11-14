@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { calculateScore } from '../utils/scoring'
 import { getQuestionById } from '../data/questionnaire'
 import { processAnswer } from '../utils/questionLogic'
@@ -6,6 +7,7 @@ const ResultPage = ({ result, onRestart }) => {
   const isValid = result.result === 'VALID'
   const isInvalid = result.result === 'INVALID'
   const isGreyArea = result.result === 'GREY_AREA'
+  const [isPassedNotesExpanded, setIsPassedNotesExpanded] = useState(false)
 
   const score = calculateScore(result.answers, result.pathHistory, result.result)
 
@@ -126,40 +128,62 @@ const ResultPage = ({ result, onRestart }) => {
 
                 {(greys.length > 0 || valids.length > 0) && (
                   <div className="p-6 rounded-lg mb-6 bg-white border border-green-100">
-                    <h2 className="font-semibold text-lg mb-4 text-green-700">Passed / Notes</h2>
-                    <div className="space-y-4">
-                      {greys.map((r, i) => (
-                        <div key={`grey-${i}`} className="bg-gray-50 p-4 rounded">
-                          <div className="text-sm text-gray-600 mb-1">
-                            <strong>Section {r.sectionId}.</strong> Question {r.questionId}.
-                          </div>
-                          <div className="font-medium text-gray-900 mb-1">{r.questionText}</div>
-                          <div className="text-sm text-gray-700 mb-2">
-                            <span className="font-semibold">You answered:</span> {r.answer}
-                          </div>
-                          <div className="text-sm text-yellow-700">
-                            <span className="font-semibold">Note:</span> {r.reason}
-                          </div>
-                        </div>
-                      ))}
-
-                      {valids.map((r, i) => (
-                        <div key={`valid-${i}`} className="bg-gray-50 p-4 rounded">
-                          <div className="text-sm text-gray-600 mb-1">
-                            <strong>Section {r.sectionId}.</strong> Question {r.questionId}.
-                          </div>
-                          <div className="font-medium text-gray-900 mb-1">{r.questionText}</div>
-                          <div className="text-sm text-gray-700 mb-2">
-                            <span className="font-semibold">You answered:</span> {r.answer}
-                          </div>
-                          {r.reason && (
-                            <div className="text-sm text-green-700">
-                              <span className="font-semibold">Passed:</span> {r.reason}
+                    <button
+                      onClick={() => setIsPassedNotesExpanded(!isPassedNotesExpanded)}
+                      className="w-full flex items-center justify-between font-semibold text-lg mb-4 text-green-700 hover:text-green-800 transition-colors"
+                      aria-expanded={isPassedNotesExpanded}
+                      aria-controls="passed-notes-content"
+                    >
+                      <span>Passed / Notes</span>
+                      <svg
+                        className={`h-5 w-5 transition-transform duration-200 ${isPassedNotesExpanded ? 'transform rotate-180' : ''}`}
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M19 9l-7 7-7-7"
+                        />
+                      </svg>
+                    </button>
+                    {isPassedNotesExpanded && (
+                      <div id="passed-notes-content" className="space-y-4 transition-opacity duration-200">
+                        {greys.map((r, i) => (
+                          <div key={`grey-${i}`} className="bg-gray-50 p-4 rounded">
+                            <div className="text-sm text-gray-600 mb-1">
+                              <strong>Section {r.sectionId}.</strong> Question {r.questionId}.
                             </div>
-                          )}
-                        </div>
-                      ))}
-                    </div>
+                            <div className="font-medium text-gray-900 mb-1">{r.questionText}</div>
+                            <div className="text-sm text-gray-700 mb-2">
+                              <span className="font-semibold">You answered:</span> {r.answer}
+                            </div>
+                            <div className="text-sm text-yellow-700">
+                              <span className="font-semibold">Note:</span> {r.reason}
+                            </div>
+                          </div>
+                        ))}
+
+                        {valids.map((r, i) => (
+                          <div key={`valid-${i}`} className="bg-gray-50 p-4 rounded">
+                            <div className="text-sm text-gray-600 mb-1">
+                              <strong>Section {r.sectionId}.</strong> Question {r.questionId}.
+                            </div>
+                            <div className="font-medium text-gray-900 mb-1">{r.questionText}</div>
+                            <div className="text-sm text-gray-700 mb-2">
+                              <span className="font-semibold">You answered:</span> {r.answer}
+                            </div>
+                            {r.reason && (
+                              <div className="text-sm text-green-700">
+                                <span className="font-semibold">Passed:</span> {r.reason}
+                              </div>
+                            )}
+                          </div>
+                        ))}
+                      </div>
+                    )}
                   </div>
                 )}
               </div>
