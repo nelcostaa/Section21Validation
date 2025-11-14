@@ -239,26 +239,30 @@ const ResultPage = ({ result, onRestart }) => {
             </div>
           )}
 
-          <div className="mt-8 pt-6 border-t border-gray-200">
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+          {/* Start New Assessment button inside card */}
+          <div className="mt-6 mb-6 flex justify-center">
+            <button
+              onClick={onRestart}
+              className="bg-gradient-to-r from-orange-accent-dark to-orange-accent-light text-white px-6 py-2.5 rounded-full text-sm font-semibold hover:from-orange-accent-light hover:to-orange-accent-dark transition-all duration-300 shadow-md hover:shadow-lg border-2 border-orange-accent-light/50"
+            >
+              Start New Assessment
+            </button>
+          </div>
+
+          <div className="mt-8 pt-6 border-t border-orange-accent-light/30">
+            <div className="flex flex-col sm:flex-row gap-3 justify-center">
               <a
                 href="#"
-                className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-md transition-colors"
+                className="bg-gradient-to-r from-orange-accent-dark to-orange-accent-light text-white px-5 py-2 rounded-full text-sm font-semibold hover:from-orange-accent-light hover:to-orange-accent-dark transition-all duration-300 shadow-md hover:shadow-lg border-2 border-orange-accent-light/50 text-center"
               >
                 Download Compliance Checklist
               </a>
               <a
                 href="#"
-                className="bg-gray-800 hover:bg-gray-900 text-white font-semibold py-3 px-6 rounded-md transition-colors"
+                className="bg-gradient-to-r from-orange-accent-dark to-orange-accent-light text-white px-5 py-2 rounded-full text-sm font-semibold hover:from-orange-accent-light hover:to-orange-accent-dark transition-all duration-300 shadow-md hover:shadow-lg border-2 border-orange-accent-light/50 text-center"
               >
                 Book a Consultation
               </a>
-              <button
-                onClick={onRestart}
-                className="bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-3 px-6 rounded-md transition-colors"
-              >
-                Start New Assessment
-              </button>
             </div>
           </div>
 
