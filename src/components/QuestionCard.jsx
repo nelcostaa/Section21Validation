@@ -26,6 +26,8 @@ const QuestionCard = ({ question, selectedAnswer, onAnswerSelect }) => {
             value={answer.value}
             onClick={onAnswerSelect}
             isSelected={selectedAnswer === answer.value}
+            answerType={answer.action?.type || null}
+            questionId={question.id}
           />
         ))}
       </div>

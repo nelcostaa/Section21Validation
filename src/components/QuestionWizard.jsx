@@ -1,4 +1,4 @@
-import { useReducer, useEffect } from 'react'
+import { useReducer, useEffect, useRef } from 'react'
 import QuestionCard from './QuestionCard'
 import ProgressIndicator from './ProgressIndicator'
 import { getQuestionById } from '../data/questionnaire'
@@ -104,19 +104,41 @@ const wizardReducer = (state, action) => {
 
 const QuestionWizard = ({ onComplete }) => {
   const [state, dispatch] = useReducer(wizardReducer, initialState)
+  const pendingTransitionRef = useRef(null)
   
   const currentQuestion = getQuestionById(state.currentQuestionId)
   const selectedAnswer = state.answers.get(state.currentQuestionId)
 
   const handleAnswerSelect = (answerValue) => {
-    dispatch({
-      type: 'ANSWER_QUESTION',
-      payload: {
-        questionId: state.currentQuestionId,
-        answerValue
-      }
-    })
+    // Clear any pending transition
+    if (pendingTransitionRef.current) {
+      clearTimeout(pendingTransitionRef.current)
+    }
+
+    // Capture current questionId at click time to avoid stale closure issues
+    const currentQuestionId = state.currentQuestionId
+
+    // Show feedback for 1 second, then transition to next question
+    pendingTransitionRef.current = setTimeout(() => {
+      dispatch({
+        type: 'ANSWER_QUESTION',
+        payload: {
+          questionId: currentQuestionId,
+          answerValue
+        }
+      })
+      pendingTransitionRef.current = null
+    }, 1000)
   }
+
+  // Cleanup timeout on unmount
+  useEffect(() => {
+    return () => {
+      if (pendingTransitionRef.current) {
+        clearTimeout(pendingTransitionRef.current)
+      }
+    }
+  }, [])
 
   // Check if we have a result and notify parent
   useEffect(() => {
