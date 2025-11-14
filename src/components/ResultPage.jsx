@@ -7,6 +7,7 @@ const ResultPage = ({ result, onRestart }) => {
   const isValid = result.result === 'VALID'
   const isInvalid = result.result === 'INVALID'
   const isGreyArea = result.result === 'GREY_AREA'
+  const [isInvalidExpanded, setIsInvalidExpanded] = useState(false)
   const [isPassedNotesExpanded, setIsPassedNotesExpanded] = useState(false)
 
   const score = calculateScore(result.answers, result.pathHistory, result.result)
@@ -101,28 +102,50 @@ const ResultPage = ({ result, onRestart }) => {
               <div className="space-y-6">
                 {invalids.length > 0 && (
                   <div className="p-6 rounded-lg mb-6 bg-white border border-red-100">
-                    <h2 className="font-semibold text-lg mb-4 text-red-700">Invalid Questions</h2>
-                    <div className="space-y-4">
-                      {invalids.map((r, i) => (
-                        <div key={`invalid-${i}`} className="bg-gray-50 p-4 rounded">
-                          <div className="text-sm text-gray-600 mb-1">
-                            <strong>Section {r.sectionId}.</strong> Question {r.questionId}.
-                          </div>
-                          <div className="font-medium text-gray-900 mb-1">{r.questionText}</div>
-                          <div className="text-sm text-gray-700 mb-2">
-                            <span className="font-semibold">You answered:</span> {r.answer}
-                          </div>
-                          <div className="text-sm text-red-700 mb-2">
-                            <span className="font-semibold">Invalid:</span> {r.reason}
-                          </div>
-                          {r.actionToTake && (
-                            <div className="text-sm text-blue-700 bg-blue-50 p-3 rounded border-l-2 border-blue-400">
-                              <span className="font-semibold">Action to take:</span> {r.actionToTake}
+                    <button
+                      onClick={() => setIsInvalidExpanded(!isInvalidExpanded)}
+                      className="w-full flex items-center justify-between font-semibold text-lg mb-4 text-red-700 hover:text-red-800 transition-colors"
+                      aria-expanded={isInvalidExpanded}
+                      aria-controls="invalid-questions-content"
+                    >
+                      <span>Invalid Questions</span>
+                      <svg
+                        className={`h-5 w-5 transition-transform duration-200 ${isInvalidExpanded ? 'transform rotate-180' : ''}`}
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M19 9l-7 7-7-7"
+                        />
+                      </svg>
+                    </button>
+                    {isInvalidExpanded && (
+                      <div id="invalid-questions-content" className="space-y-4 transition-opacity duration-200">
+                        {invalids.map((r, i) => (
+                          <div key={`invalid-${i}`} className="bg-gray-50 p-4 rounded">
+                            <div className="text-sm text-gray-600 mb-1">
+                              <strong>Section {r.sectionId}.</strong> Question {r.questionId}.
                             </div>
-                          )}
-                        </div>
-                      ))}
-                    </div>
+                            <div className="font-medium text-gray-900 mb-1">{r.questionText}</div>
+                            <div className="text-sm text-gray-700 mb-2">
+                              <span className="font-semibold">You answered:</span> {r.answer}
+                            </div>
+                            <div className="text-sm text-red-700 mb-2">
+                              <span className="font-semibold">Invalid:</span> {r.reason}
+                            </div>
+                            {r.actionToTake && (
+                              <div className="text-sm text-blue-700 bg-blue-50 p-3 rounded border-l-2 border-blue-400">
+                                <span className="font-semibold">Action to take:</span> {r.actionToTake}
+                              </div>
+                            )}
+                          </div>
+                        ))}
+                      </div>
+                    )}
                   </div>
                 )}
 
