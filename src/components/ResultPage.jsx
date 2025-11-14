@@ -12,6 +12,11 @@ const ResultPage = ({ result, onRestart }) => {
 
   const score = calculateScore(result.answers, result.pathHistory, result.result)
 
+  // Calculate counts early for use in header
+  const invalids = result.reasons ? result.reasons.filter(r => r.type === 'INVALID') : []
+  const greys = result.reasons ? result.reasons.filter(r => r.type === 'GREY_AREA') : []
+  const valids = result.reasons ? result.reasons.filter(r => r.type === 'VALID') : []
+
   return (
     <div className="min-h-screen py-8 px-4" style={{ backgroundColor: '#fff8f2' }}>
       <div className="max-w-3xl mx-auto">
@@ -20,85 +25,113 @@ const ResultPage = ({ result, onRestart }) => {
           isInvalid ? 'border-l-4 border-red-500' : 
           'border-l-4 border-yellow-500'
         }`}>
-          <div className="text-center mb-8">
-            {isValid && (
-              <>
-                <div className="mx-auto flex items-center justify-center h-16 w-16 rounded-full bg-green-100 mb-4">
-                  <svg
-                    className="h-8 w-8 text-green-600"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M5 13l4 4L19 7"
-                    />
-                  </svg>
-                </div>
-                <h1 className="text-4xl font-bold text-green-600 mb-2">VALID</h1>
-                <p className="text-xl text-gray-700">
-                  Your Section 21 notice appears to meet the statutory requirements.
-                </p>
-              </>
-            )}
-            
-            {isInvalid && (
-              <>
-                <div className="mx-auto flex items-center justify-center h-16 w-16 rounded-full bg-red-100 mb-4">
-                  <svg
-                    className="h-8 w-8 text-red-600"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M6 18L18 6M6 6l12 12"
-                    />
-                  </svg>
-                </div>
-                <h1 className="text-4xl font-bold text-red-600 mb-2">INVALID</h1>
-                <p className="text-xl text-gray-700">
-                  Your Section 21 notice is not valid.
-                </p>
-              </>
-            )}
+          {/* Header with two-column grid: left (text) + right (stat cards) */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+            {/* Left Column: Heading + Text */}
+            <div className="flex flex-col">
+              {isValid && (
+                <>
+                  <div className="flex items-center gap-3 mb-4">
+                    <div className="flex items-center justify-center h-16 w-16 rounded-full bg-green-100 flex-shrink-0">
+                      <svg
+                        className="h-8 w-8 text-green-600"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M5 13l4 4L19 7"
+                        />
+                      </svg>
+                    </div>
+                    <h1 className="text-4xl font-bold text-green-600">VALID</h1>
+                  </div>
+                  <p className="text-left text-xl text-gray-700 leading-relaxed">
+                    Your Section 21 notice appears to meet the statutory requirements.
+                  </p>
+                </>
+              )}
+              
+              {isInvalid && (
+                <>
+                  <div className="flex items-center gap-3 mb-4">
+                    <div className="flex items-center justify-center h-16 w-16 rounded-full bg-red-100 flex-shrink-0">
+                      <svg
+                        className="h-8 w-8 text-red-600"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M6 18L18 6M6 6l12 12"
+                        />
+                      </svg>
+                    </div>
+                    <h1 className="text-4xl font-bold text-red-600">INVALID</h1>
+                  </div>
+                  <p className="text-left text-xl text-gray-700 leading-relaxed">
+                    Your Section 21 notice is not valid.
+                  </p>
+                </>
+              )}
 
-            {isGreyArea && (
-              <>
-                <div className="mx-auto flex items-center justify-center h-16 w-16 rounded-full bg-yellow-100 mb-4">
-                  <svg
-                    className="h-8 w-8 text-yellow-600"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"
-                    />
-                  </svg>
+              {isGreyArea && (
+                <>
+                  <div className="flex items-center gap-3 mb-4">
+                    <div className="flex items-center justify-center h-16 w-16 rounded-full bg-yellow-100 flex-shrink-0">
+                      <svg
+                        className="h-8 w-8 text-yellow-600"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"
+                        />
+                      </svg>
+                    </div>
+                    <h1 className="text-4xl font-bold text-yellow-600">GREY AREA</h1>
+                  </div>
+                  <p className="text-left text-xl text-gray-700 leading-relaxed">
+                    The law is not fully settled on this point.
+                  </p>
+                </>
+              )}
+            </div>
+
+            {/* Right Column: Stat Cards */}
+            <div className="flex flex-col gap-3 justify-start">
+              {valids.length > 0 && (
+                <div className="bg-green-600 text-white p-5 rounded-lg">
+                  <div className="text-2xl font-bold mb-1">{valids.length}</div>
+                  <div className="text-sm font-semibold">items Compliant</div>
                 </div>
-                <h1 className="text-4xl font-bold text-yellow-600 mb-2">GREY AREA</h1>
-                <p className="text-xl text-gray-700">
-                  The law is not fully settled on this point.
-                </p>
-              </>
-            )}
+              )}
+              {invalids.length > 0 && (
+                <div className="bg-red-600 text-white p-5 rounded-lg">
+                  <div className="text-2xl font-bold mb-1">{invalids.length}</div>
+                  <div className="text-sm font-semibold">items Invalid</div>
+                </div>
+              )}
+              {greys.length > 0 && (
+                <div className="bg-gray-600 text-white p-5 rounded-lg">
+                  <div className="text-2xl font-bold mb-1">{greys.length}</div>
+                  <div className="text-sm font-semibold">items Uncertain</div>
+                </div>
+              )}
+            </div>
           </div>
 
-          {result.reasons && result.reasons.length > 0 && (() => {
-            const invalids = result.reasons.filter(r => r.type === 'INVALID')
-            const greys = result.reasons.filter(r => r.type === 'GREY_AREA')
-            const valids = result.reasons.filter(r => r.type === 'VALID')
-            return (
+          {result.reasons && result.reasons.length > 0 && (
               <div className="space-y-6">
                 {invalids.length > 0 && (
                   <div className="p-6 rounded-lg mb-6 bg-white border border-red-100">
@@ -210,8 +243,7 @@ const ResultPage = ({ result, onRestart }) => {
                   </div>
                 )}
               </div>
-            )
-          })()}
+          )}
 
           
 
