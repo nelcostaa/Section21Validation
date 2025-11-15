@@ -2,6 +2,7 @@ import { useState, useRef } from 'react'
 import { calculateScore } from '../utils/scoring'
 import { getQuestionById } from '../data/questionnaire'
 import { processAnswer } from '../utils/questionLogic'
+import { generateAssessmentPDF } from '../utils/pdfGenerator'
 
 const ResultPage = ({ result, onRestart }) => {
   const isValid = result.result === 'VALID'
@@ -43,6 +44,11 @@ const ResultPage = ({ result, onRestart }) => {
         block: 'start' 
       })
     }, 100)
+  }
+
+  // Handler to download PDF
+  const handleDownloadPDF = () => {
+    generateAssessmentPDF(result)
   }
 
   return (
@@ -336,12 +342,12 @@ const ResultPage = ({ result, onRestart }) => {
 
           <div className="mt-8 pt-6 border-t border-orange-accent-light/30">
             <div className="flex flex-col sm:flex-row gap-3 justify-center">
-              <a
-                href="#"
-                className="bg-gradient-to-r from-orange-accent-dark to-orange-accent-light text-white px-5 py-2 rounded-full text-sm font-semibold hover:from-orange-accent-light hover:to-orange-accent-dark transition-all duration-300 shadow-md hover:shadow-lg border-2 border-orange-accent-light/50 text-center"
+              <button
+                onClick={handleDownloadPDF}
+                className="bg-gradient-to-r from-orange-accent-dark to-orange-accent-light text-white px-5 py-2 rounded-full text-sm font-semibold hover:from-orange-accent-light hover:to-orange-accent-dark transition-all duration-300 shadow-md hover:shadow-lg border-2 border-orange-accent-light/50 text-center cursor-pointer focus:outline-none focus:ring-2 focus:ring-orange-400 focus:ring-offset-2"
               >
                 Download Compliance Checklist
-              </a>
+              </button>
               <a
                 href="#"
                 className="bg-gradient-to-r from-orange-accent-dark to-orange-accent-light text-white px-5 py-2 rounded-full text-sm font-semibold hover:from-orange-accent-light hover:to-orange-accent-dark transition-all duration-300 shadow-md hover:shadow-lg border-2 border-orange-accent-light/50 text-center"
