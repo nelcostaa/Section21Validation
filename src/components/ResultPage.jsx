@@ -111,7 +111,12 @@ const ResultPage = ({ result, onRestart }) => {
             {/* Right Column: Stat Cards */}
             <div className="flex flex-col gap-3 justify-start">
               {valids.length > 0 && (
-                <div className="bg-gradient-to-br from-green-600 to-green-700 text-white p-6 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 border border-green-500/20">
+                <button
+                  onClick={() => setIsPassedNotesExpanded(!isPassedNotesExpanded)}
+                  className="bg-gradient-to-br from-green-600 to-green-700 text-white p-6 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 border border-green-500/20 cursor-pointer active:scale-[0.98] focus:outline-none focus:ring-2 focus:ring-green-400 focus:ring-offset-2"
+                  aria-label={`${isPassedNotesExpanded ? 'Collapse' : 'Expand'} passed and notes section`}
+                  aria-expanded={isPassedNotesExpanded}
+                >
                   <div className="flex items-center justify-between mb-2">
                     <div className="text-3xl font-bold">{valids.length}</div>
                     <svg className="h-8 w-8 text-green-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -119,10 +124,15 @@ const ResultPage = ({ result, onRestart }) => {
                     </svg>
                   </div>
                   <div className="text-sm font-medium text-green-50 uppercase tracking-wide">Items Compliant</div>
-                </div>
+                </button>
               )}
               {invalids.length > 0 && (
-                <div className="bg-gradient-to-br from-red-600 to-red-700 text-white p-6 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 border border-red-500/20">
+                <button
+                  onClick={() => setIsInvalidExpanded(!isInvalidExpanded)}
+                  className="bg-gradient-to-br from-red-600 to-red-700 text-white p-6 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 border border-red-500/20 cursor-pointer active:scale-[0.98] focus:outline-none focus:ring-2 focus:ring-red-400 focus:ring-offset-2"
+                  aria-label={`${isInvalidExpanded ? 'Collapse' : 'Expand'} invalid questions section`}
+                  aria-expanded={isInvalidExpanded}
+                >
                   <div className="flex items-center justify-between mb-2">
                     <div className="text-3xl font-bold">{invalids.length}</div>
                     <svg className="h-8 w-8 text-red-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -130,7 +140,7 @@ const ResultPage = ({ result, onRestart }) => {
                     </svg>
                   </div>
                   <div className="text-sm font-medium text-red-50 uppercase tracking-wide">Items Invalid</div>
-                </div>
+                </button>
               )}
               {greys.length > 0 && (
                 <div className="bg-gradient-to-br from-gray-600 to-gray-700 text-white p-6 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-500/20">
