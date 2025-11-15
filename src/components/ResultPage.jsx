@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useRef } from 'react'
 import { calculateScore } from '../utils/scoring'
 import { getQuestionById } from '../data/questionnaire'
 import { processAnswer } from '../utils/questionLogic'
@@ -9,6 +9,10 @@ const ResultPage = ({ result, onRestart }) => {
   const isGreyArea = result.result === 'GREY_AREA'
   const [isInvalidExpanded, setIsInvalidExpanded] = useState(false)
   const [isPassedNotesExpanded, setIsPassedNotesExpanded] = useState(false)
+  
+  // Refs for scrolling to sections
+  const invalidSectionRef = useRef(null)
+  const passedNotesSectionRef = useRef(null)
 
   const score = calculateScore(result.answers, result.pathHistory, result.result)
 
@@ -16,6 +20,30 @@ const ResultPage = ({ result, onRestart }) => {
   const invalids = result.reasons ? result.reasons.filter(r => r.type === 'INVALID') : []
   const greys = result.reasons ? result.reasons.filter(r => r.type === 'GREY_AREA') : []
   const valids = result.reasons ? result.reasons.filter(r => r.type === 'VALID') : []
+
+  // Handler to expand and scroll to passed notes section
+  const handlePassedNotesClick = () => {
+    setIsPassedNotesExpanded(true)
+    // Use setTimeout to ensure the section is rendered before scrolling
+    setTimeout(() => {
+      passedNotesSectionRef.current?.scrollIntoView({ 
+        behavior: 'smooth', 
+        block: 'start' 
+      })
+    }, 100)
+  }
+
+  // Handler to expand and scroll to invalid questions section
+  const handleInvalidClick = () => {
+    setIsInvalidExpanded(true)
+    // Use setTimeout to ensure the section is rendered before scrolling
+    setTimeout(() => {
+      invalidSectionRef.current?.scrollIntoView({ 
+        behavior: 'smooth', 
+        block: 'start' 
+      })
+    }, 100)
+  }
 
   return (
     <div className="min-h-screen py-8 px-4" style={{ backgroundColor: '#fff8f2' }}>
@@ -112,7 +140,7 @@ const ResultPage = ({ result, onRestart }) => {
             <div className="flex flex-col gap-3 justify-start">
               {valids.length > 0 && (
                 <button
-                  onClick={() => setIsPassedNotesExpanded(!isPassedNotesExpanded)}
+                  onClick={handlePassedNotesClick}
                   className="bg-gradient-to-br from-green-600 to-green-700 text-white p-6 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 border border-green-500/20 cursor-pointer active:scale-[0.98] focus:outline-none focus:ring-2 focus:ring-green-400 focus:ring-offset-2"
                   aria-label={`${isPassedNotesExpanded ? 'Collapse' : 'Expand'} passed and notes section`}
                   aria-expanded={isPassedNotesExpanded}
@@ -128,7 +156,7 @@ const ResultPage = ({ result, onRestart }) => {
               )}
               {invalids.length > 0 && (
                 <button
-                  onClick={() => setIsInvalidExpanded(!isInvalidExpanded)}
+                  onClick={handleInvalidClick}
                   className="bg-gradient-to-br from-red-600 to-red-700 text-white p-6 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 border border-red-500/20 cursor-pointer active:scale-[0.98] focus:outline-none focus:ring-2 focus:ring-red-400 focus:ring-offset-2"
                   aria-label={`${isInvalidExpanded ? 'Collapse' : 'Expand'} invalid questions section`}
                   aria-expanded={isInvalidExpanded}
@@ -159,7 +187,7 @@ const ResultPage = ({ result, onRestart }) => {
           {result.reasons && result.reasons.length > 0 && (
               <div className="space-y-6">
                 {invalids.length > 0 && (
-                  <div className="p-6 rounded-lg mb-6 bg-white border border-red-100">
+                  <div ref={invalidSectionRef} className="p-6 rounded-lg mb-6 bg-white border border-red-100">
                     <button
                       onClick={() => setIsInvalidExpanded(!isInvalidExpanded)}
                       className="w-full flex items-center justify-between font-semibold text-lg mb-4 text-red-700 hover:text-red-800 transition-colors"
@@ -208,7 +236,7 @@ const ResultPage = ({ result, onRestart }) => {
                 )}
 
                 {(greys.length > 0 || valids.length > 0) && (
-                  <div className="p-6 rounded-lg mb-6 bg-white border border-green-100">
+                  <div ref={passedNotesSectionRef} className="p-6 rounded-lg mb-6 bg-white border border-green-100">
                     <button
                       onClick={() => setIsPassedNotesExpanded(!isPassedNotesExpanded)}
                       className="w-full flex items-center justify-between font-semibold text-lg mb-4 text-green-700 hover:text-green-800 transition-colors"
