@@ -4,7 +4,7 @@ import ProgressIndicator from './ProgressIndicator'
 import { getQuestionById } from '../data/questionnaire'
 import { getInitialQuestionId, processAnswer, isResultAction, getNextSequentialQuestionId, aggregateResultActions } from '../utils/questionLogic'
 
-const initialState = {
+export const initialState = {
   currentQuestionId: getInitialQuestionId(),
   answers: new Map(),
   pathHistory: [getInitialQuestionId()],
@@ -13,9 +13,9 @@ const initialState = {
   pendingResults: []
 }
 
-const wizardReducer = (state, action) => {
+export const wizardReducer = (state, action) => {
   switch (action.type) {
-    case 'ANSWER_QUESTION':
+    case 'ANSWER_QUESTION': {
       const { questionId, answerValue } = action.payload
       const actionResult = processAnswer(questionId, answerValue)
 
@@ -23,8 +23,12 @@ const wizardReducer = (state, action) => {
       newAnswers.set(questionId, answerValue)
 
       if (isResultAction(actionResult)) {
+        // Remove any existing pendingResult for this questionId before adding new one
+        const filteredPending = (state.pendingResults || []).filter(
+          result => result.questionId !== questionId
+        )
         // Record the result action (include questionId) but continue through the questionnaire sequentially.
-        const newPending = [...(state.pendingResults || []), { ...actionResult, questionId }]
+        const newPending = [...filteredPending, { ...actionResult, questionId }]
         const nextSeq = getNextSequentialQuestionId(questionId)
 
         if (nextSeq) {
@@ -93,6 +97,64 @@ const wizardReducer = (state, action) => {
           pathHistory: [...state.pathHistory, questionId, actionResult.questionId]
         }
       }
+    }
+    
+    case 'GO_BACK': {
+      // Can't go back from the first question
+      if (state.pathHistory.length <= 1) {
+        return state
+      }
+
+      const currentQId = state.currentQuestionId
+      
+      // Find the last unique question that was answered (before current question)
+      // We need to find the last question in pathHistory that has an answer and is not the current question
+      let previousQuestionId = null
+      let previousIndex = -1
+      
+      // Work backwards through pathHistory to find the last answered question
+      for (let i = state.pathHistory.length - 1; i >= 0; i--) {
+        const qId = state.pathHistory[i]
+        // Skip the current question
+        if (qId === currentQId) continue
+        // If this question has an answer, it's our previous question
+        if (state.answers.has(qId)) {
+          previousQuestionId = qId
+          previousIndex = i
+          break
+        }
+      }
+
+      // If we couldn't find a previous question, can't go back
+      if (!previousQuestionId || previousIndex === -1) {
+        return state
+      }
+
+      // Remove current question and everything after the previous question from pathHistory
+      const newPathHistory = state.pathHistory.slice(0, previousIndex + 1)
+      
+      // Remove answers for current question and any questions that came after the previous one
+      const newAnswers = new Map(state.answers)
+      const questionsToRemove = state.pathHistory.slice(previousIndex + 1)
+      questionsToRemove.forEach(qId => newAnswers.delete(qId))
+      
+      // Remove pendingResults for questions that are being removed
+      // Also remove pendingResult for the question we're going back to (since user might change answer)
+      const newPendingResults = state.pendingResults.filter(result => {
+        return !questionsToRemove.includes(result.questionId) && 
+               result.questionId !== previousQuestionId
+      })
+
+      return {
+        ...state,
+        currentQuestionId: previousQuestionId,
+        answers: newAnswers,
+        pathHistory: newPathHistory,
+        pendingResults: newPendingResults,
+        result: null,
+        reasons: null
+      }
+    }
     
     case 'RESET':
       return initialState
@@ -130,6 +192,17 @@ const QuestionWizard = ({ onComplete }) => {
       pendingTransitionRef.current = null
     }, 1000)
   }
+
+  const handleGoBack = () => {
+    // Clear any pending transition
+    if (pendingTransitionRef.current) {
+      clearTimeout(pendingTransitionRef.current)
+      pendingTransitionRef.current = null
+    }
+    dispatch({ type: 'GO_BACK' })
+  }
+
+  const canGoBack = state.pathHistory.length > 1 && state.currentQuestionId !== getInitialQuestionId()
 
   // Cleanup timeout on unmount
   useEffect(() => {
@@ -183,6 +256,8 @@ const QuestionWizard = ({ onComplete }) => {
           question={currentQuestion}
           selectedAnswer={selectedAnswer}
           onAnswerSelect={handleAnswerSelect}
+          onGoBack={handleGoBack}
+          canGoBack={canGoBack}
         />
       </div>
     </div>

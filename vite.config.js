@@ -6,5 +6,9 @@ export default defineConfig({
   // Use relative base so the site works whether hosted at repo subpath or root
   base: './',
   plugins: [react()],
+  test: {
+    globals: true,
+    environment: 'jsdom',
+  },
 })
 

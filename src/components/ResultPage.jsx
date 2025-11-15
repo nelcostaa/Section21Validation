@@ -111,21 +111,36 @@ const ResultPage = ({ result, onRestart }) => {
             {/* Right Column: Stat Cards */}
             <div className="flex flex-col gap-3 justify-start">
               {valids.length > 0 && (
-                <div className="bg-green-600 text-white p-5 rounded-lg">
-                  <div className="text-2xl font-bold mb-1">{valids.length}</div>
-                  <div className="text-sm font-semibold">items Compliant</div>
+                <div className="bg-gradient-to-br from-green-600 to-green-700 text-white p-6 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 border border-green-500/20">
+                  <div className="flex items-center justify-between mb-2">
+                    <div className="text-3xl font-bold">{valids.length}</div>
+                    <svg className="h-8 w-8 text-green-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                  </div>
+                  <div className="text-sm font-medium text-green-50 uppercase tracking-wide">Items Compliant</div>
                 </div>
               )}
               {invalids.length > 0 && (
-                <div className="bg-red-600 text-white p-5 rounded-lg">
-                  <div className="text-2xl font-bold mb-1">{invalids.length}</div>
-                  <div className="text-sm font-semibold">items Invalid</div>
+                <div className="bg-gradient-to-br from-red-600 to-red-700 text-white p-6 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 border border-red-500/20">
+                  <div className="flex items-center justify-between mb-2">
+                    <div className="text-3xl font-bold">{invalids.length}</div>
+                    <svg className="h-8 w-8 text-red-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                  </div>
+                  <div className="text-sm font-medium text-red-50 uppercase tracking-wide">Items Invalid</div>
                 </div>
               )}
               {greys.length > 0 && (
-                <div className="bg-gray-600 text-white p-5 rounded-lg">
-                  <div className="text-2xl font-bold mb-1">{greys.length}</div>
-                  <div className="text-sm font-semibold">items Uncertain</div>
+                <div className="bg-gradient-to-br from-gray-600 to-gray-700 text-white p-6 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-500/20">
+                  <div className="flex items-center justify-between mb-2">
+                    <div className="text-3xl font-bold">{greys.length}</div>
+                    <svg className="h-8 w-8 text-gray-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                    </svg>
+                  </div>
+                  <div className="text-sm font-medium text-gray-50 uppercase tracking-wide">Items Uncertain</div>
                 </div>
               )}
             </div>

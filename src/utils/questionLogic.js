@@ -79,3 +79,23 @@ export const aggregateResultActions = (actions) => {
   return { result: final, reasons }
 }
 
+/**
+ * Determines the visual feedback type for an answer based on its action
+ * @param {Object} action - The action object from an answer
+ * @returns {string|null} - 'positive', 'negative', 'neutral', or null
+ */
+export const getAnswerType = (action) => {
+  if (!action) return null
+  
+  if (action.type === 'result') {
+    if (action.result === 'INVALID') return 'negative'
+    if (action.result === 'GREY_AREA') return 'neutral'
+    if (action.result === 'VALID') return 'positive'
+  }
+  
+  // If it continues to next question, it's generally positive/neutral
+  if (action.type === 'next') return 'positive'
+  
+  return null
+}
+
